@@ -6,8 +6,10 @@ import jie.android.bigscreen.view.PlugLayout;
 import jie.android.bigscreen.view.SlotScrollView;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
 import android.view.View;
@@ -19,7 +21,6 @@ public class MainActivity extends Activity {
 
 	
 	private SlotScrollView slotScrollView = null;
-	private LinearLayout slotLayout = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		slotScrollView = (SlotScrollView) this.findViewById(R.id.slotScrollView1);
-		//slotLayout = (LinearLayout) this.findViewById(R.id.slotlayout);
 		
 		Button btn = (Button) this.findViewById(R.id.button1);
 		btn.setOnClickListener(new OnClickListener() {
@@ -46,12 +46,36 @@ public class MainActivity extends Activity {
 
 		AttributeSet attrs1 = Utils.getAttributeSet(this, BSImageView.class.getName(), R.layout.view_bsimage);			
 		BSImageView iv = new BSImageView(this, attrs1);
-		iv.setImageResource(R.drawable.ic_launcher);
+		iv.loadContent(R.drawable.ic_launcher);
+				
+		layout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Log.d("===", "view:" + v.getClass().getSimpleName());
+				onViewClick(v);
+			}
+			
+		});
 		
 		layout.addChildView(iv);
 		
 		//slotLayout.addView(layout);
 		slotScrollView.addPlugLayout(layout);
+	}
+
+	protected void onViewClick(View view) {
+		
+		Intent intent = new Intent(this, BSImageShowActivity.class);
+		
+		if (view instanceof BSImageView) {			
+			intent.putExtra("resource_id", ((BSImageView)view).getContent());			
+		} else {
+			return;
+		}
+		
+		this.startActivity(intent);
+		this.overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 	}
 
 	@Override

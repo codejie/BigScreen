@@ -16,10 +16,18 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
     <style parent="android:Theme.Black" name="BSTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>        
     </style>
+	<style name="BSTransparentTheme" parent="BSTheme">
+        <item name="android:windowBackground">@drawable/bg_transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>	    
+	</style>
+    
     
 </resources>
