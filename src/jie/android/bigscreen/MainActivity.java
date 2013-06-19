@@ -41,26 +41,32 @@ public class MainActivity extends Activity {
 	}
 
 	protected void onBtnClick() {
+		addPlugLayout();
+	}
+
+	private void addPlugLayout() {
 		AttributeSet attrs = Utils.getAttributeSet(this, PlugLayout.class.getName(), R.layout.view_pluglayout);
 		PlugLayout layout = new PlugLayout(this, attrs);
 
-		AttributeSet attrs1 = Utils.getAttributeSet(this, BSImageView.class.getName(), R.layout.view_bsimage);			
-		BSImageView iv = new BSImageView(this, attrs1);
-		iv.loadContent(R.drawable.ic_launcher);
-				
 		layout.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Log.d("===", "view:" + v.getClass().getSimpleName());
 				onViewClick(v);
 			}
 			
-		});
+		});	
 		
+		AttributeSet attrs1 = Utils.getAttributeSet(this, BSImageView.class.getName(), R.layout.view_bsimage);			
+		BSImageView iv = new BSImageView(this, attrs1);
+		iv.loadContent(R.drawable.ic_launcher);
+						
 		layout.addChildView(iv);
 		
-		//slotLayout.addView(layout);
+//		iv = new BSImageView(this, attrs1);
+//		iv.loadContent(R.drawable.ic_launcher);
+//		layout.addChildView(iv);
+		
 		slotScrollView.addPlugLayout(layout);
 	}
 
