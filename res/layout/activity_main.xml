@@ -12,56 +12,40 @@
         <jie.android.bigscreen.view.SlotScrollView
             android:id="@+id/slotScrollView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:scrollbars="none" >
+
         </jie.android.bigscreen.view.SlotScrollView>
     </LinearLayout>
 
-    <AbsoluteLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1.6"
         android:visibility="gone" >
 
-    </AbsoluteLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:gravity="center"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_weight="0.7"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Button" />
-
-        </LinearLayout>
-
-        <jie.android.bigscreen.view.PlugLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <jie.android.bigscreen.view.BSImageView
-                android:id="@+id/bSImageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-
-        </jie.android.bigscreen.view.PlugLayout>
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|fill_horizontal|center"
+            android:text="Button" />
 
     </LinearLayout>
 

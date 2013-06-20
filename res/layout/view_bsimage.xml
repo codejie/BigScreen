@@ -2,7 +2,9 @@
 <jie.android.bigscreen.view.BSImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@drawable/full_transparent"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:scaleType="fitXY" >
 
 </jie.android.bigscreen.view.BSImageView>

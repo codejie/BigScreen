@@ -17,10 +17,14 @@ public class PlugLayout extends LinearLayout {
 		this.setOrientation(LinearLayout.VERTICAL);
 	}
 	
-	public boolean addChildView(View view) {
+	public boolean addChildView(View view, LinearLayout.LayoutParams params) {
 	
 		view.setOnClickListener(onClickListener);
-		addView(view, viewCount);
+		if (params != null) {
+			this.addView(view, viewCount, params);
+		} else {
+			addView(view, viewCount);
+		}
 		++ viewCount;
 		return true;
 	}
