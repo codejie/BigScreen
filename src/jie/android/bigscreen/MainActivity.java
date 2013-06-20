@@ -1,34 +1,32 @@
 package jie.android.bigscreen;
 
-import java.io.File;
-import java.io.IOException;
-
-import jie.android.bigscreen.utils.Utils;
 import jie.android.bigscreen.view.BSImageView;
-import jie.android.bigscreen.view.PlugLayout;
 import jie.android.bigscreen.view.SlotScrollView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.XmlResourceParser;
 import android.graphics.Point;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.util.Xml;
-import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener {
 
 	
 	private int SCREEN_HEIGHT	=	-1;
 	private int SCREEN_WIDTH	=	-1;
 	
-	private SlotScrollView slotScrollView = null;	
+	private LinearLayout frame = null;
+	private LinearLayout dock = null;
+	private RelativeLayout desktop = null;
+	private SlotScrollView slotScrollView = null;
+	
+	private ImageButton back = null;
+	private ImageButton remove = null;
 	
 	private ImageShowHelper imageShowHelper = null;
 	
@@ -36,7 +34,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View view) {
-			onViewClick(view);
+			onImageClick(view);
 		}
 		
 	};
@@ -49,20 +47,26 @@ public class MainActivity extends Activity {
 		
 		setContentView(R.layout.activity_main);		
 		
+		frame = (LinearLayout) this.findViewById(R.id.frame);
+		desktop = (RelativeLayout) this.findViewById(R.id.desktop);
+		dock = (LinearLayout) this.findViewById(R.id.dock);				
+		
 		slotScrollView = (SlotScrollView) this.findViewById(R.id.slotScrollView1);
 		
 		imageShowHelper = new ImageShowHelper(this, SCREEN_WIDTH, SCREEN_HEIGHT, slotScrollView);
 		imageShowHelper.setOnClickListener(onClickListener);
 		
-		Button btn = (Button) this.findViewById(R.id.button1);
-		btn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-				onBtnClick();
-			}
-			
-		});
+		((Button) this.findViewById(R.id.button8)).setOnClickListener(this);
+		((Button) this.findViewById(R.id.button7)).setOnClickListener(this);
+		((Button) this.findViewById(R.id.button6)).setOnClickListener(this);
+		((Button) this.findViewById(R.id.button5)).setOnClickListener(this);
+		((Button) this.findViewById(R.id.button4)).setOnClickListener(this);
+		((Button) this.findViewById(R.id.button3)).setOnClickListener(this);
+		
+		((Button) this.findViewById(R.id.button2)).setOnClickListener(this);
+		
+		((ImageButton)this.findViewById(R.id.back)).setOnClickListener(this);
+//		((ImageButton)this.findViewById(R.id.remove)).setOnClickListener(this);
 	}
 
 	private void getScreenInfo() {
@@ -72,51 +76,13 @@ public class MainActivity extends Activity {
 		SCREEN_WIDTH = point.x;
 	}
 
-	protected void onBtnClick() {
-		imageShowHelper.show_2x1(10);
-		//addPlugLayout();
-	}
-
-	private void addPlugLayout() {
-		AttributeSet attrs = Utils.getAttributeSet(this, PlugLayout.class.getName(), R.layout.view_pluglayout);
-		PlugLayout layout = new PlugLayout(this, attrs);
-
-		layout.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				onViewClick(v);
-			}
-			
-		});	
-		
-		AttributeSet attrs1 = Utils.getAttributeSet(this, BSImageView.class.getName(), R.layout.view_bsimage);			
-		BSImageView iv = new BSImageView(this, attrs1);
-		try {
-			iv.loadContent(this.getAssets().open("4.jpg"), "4.jpg");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		iv.loadContent(R.drawable.ic_launcher);
-						
-		layout.addChildView(iv, new LinearLayout.LayoutParams(200, 200));
-		
-//		iv = new BSImageView(this, attrs1);
-//		iv.loadContent(R.drawable.ic_launcher);
-//		layout.addChildView(iv, new LinearLayout.LayoutParams(200, 200));
-		
-		slotScrollView.addPlugLayout(layout);
-	}
-
-	protected void onViewClick(View view) {
-		
-		Log.d("===", "onViewClick view = " + view.getClass().getSimpleName());
+	protected void onImageClick(View view) {
 		
 		Intent intent = new Intent(this, BSImageShowActivity.class);
 		
-		if (view instanceof BSImageView) {			
-			intent.putExtra("resource_id", ((BSImageView)view).getContent());			
+		if (view instanceof BSImageView) {
+			intent.putExtra("location", ((BSImageView)view).getContentLocation().ordinal());
+			intent.putExtra("content", ((BSImageView)view).getContent());			
 		} else {
 			return;
 		}
@@ -130,6 +96,59 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.button8:
+			imageShowHelper.show_1x1(12);
+			break;
+		case R.id.button7:
+			imageShowHelper.show_1xslot(12);
+			break;
+		case R.id.button6:
+			imageShowHelper.show_1x4(12);
+			break;
+		case R.id.button5:
+			imageShowHelper.show_2x1(12);
+			break;
+		case R.id.button4:
+			imageShowHelper.show_2x4(12);
+			break;
+		case R.id.button3:
+			imageShowHelper.show_2x4_wrap(12);
+			break;
+		case R.id.button2:
+			onClickMeClick();
+			break;
+		case R.id.back:
+			onBackClick();
+			break;
+		}
+	}
+
+	private void onBackClick() {
+		desktop.setVisibility(View.GONE);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+		frame.setLayoutParams(params);
+//		imageShowHelper = new ImageShowHelper(this, SCREEN_WIDTH, SCREEN_HEIGHT, slotScrollView);
+//		imageShowHelper.setOnClickListener(onClickListener);
+		
+//		slotScrollView.refresh();	
+		
+		imageShowHelper.show_1x1(12);
+		dock.setVisibility(View.VISIBLE);
+	}
+
+	private void onClickMeClick() {
+		dock.setVisibility(View.GONE);		
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 110, 0.0f);
+		frame.setLayoutParams(params);
+		imageShowHelper.show_1xsmall(12);
+		params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+		desktop.setLayoutParams(params);
+		desktop.setVisibility(View.VISIBLE);
 	}
 
 }

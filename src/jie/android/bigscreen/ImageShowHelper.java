@@ -69,7 +69,11 @@ public class ImageShowHelper {
 			e.printStackTrace();
 		}
 
+		if (height > slot.getHeight()) {
+			height = slot.getHeight();
+		}
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+//		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);		
 		params.gravity = Gravity.CENTER;
 		
 		layout.addChildView(iv, params);//new LinearLayout.LayoutParams(width, height));
@@ -107,17 +111,23 @@ public class ImageShowHelper {
 		show_img_x1(screen_width, col);
 	}
 	
+	public void show_1xsmall(int col) {
+		show_img_x1(100, col);
+	}	
+	
 	public void show_1x4(int col) {
 		show_img_x1(screen_width / 4, col);
-		clear();
-		for (int i = 0; i < col; ++ i) {
-			PlugLayout layout = addPlugLayout(screen_width / 4);
-			addImage(layout, screen_width / 4, screen_width / 4);
-		}		
 	}
 	
 	public void show_2x1(int col) {
 		show_img_x2(slot.getHeight(), col);
 	}
 	
+	public void show_2x4(int col) {
+		show_img_x2(screen_width / 4, col);
+	}
+	
+	public void show_2x4_wrap(int col) {
+		show_img_x2(LinearLayout.LayoutParams.WRAP_CONTENT, col);
+	}	
 }

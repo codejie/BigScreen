@@ -4,29 +4,50 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
         android:orientation="vertical" >
 
         <jie.android.bigscreen.view.SlotScrollView
             android:id="@+id/slotScrollView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1.0"
             android:scrollbars="none" >
 
         </jie.android.bigscreen.view.SlotScrollView>
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/desktop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.6"
+        android:layout_weight="0.7"
+        android:background="@drawable/bg_transparent"
         android:visibility="gone" >
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/back" />
+
+        <ImageButton
+            android:id="@+id/remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/remove" />
 
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/dock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -38,14 +59,58 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal|fill_horizontal|center"
-            android:text="Button" />
+            android:layout_weight="0.7"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 1" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 2" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 3" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 4" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 5" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode 6" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click Me" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

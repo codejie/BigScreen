@@ -1,5 +1,7 @@
 package jie.android.bigscreen;
 
+import java.io.IOException;
+
 import jie.android.bigscreen.utils.Utils;
 import android.app.Activity;
 import android.content.ClipData;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -36,14 +39,29 @@ public class BSImageShowActivity extends Activity {
 		this.setContentView(R.layout.activity_imageshow);		
 		layout = (RelativeLayout) this.findViewById(R.id.layout);
 		
-		int resId = -1;
+		int location = -1;
+		String content = null;
 		Intent intent = this.getIntent();
 		if (intent != null) {
-			resId = intent.getExtras().getInt("resource_id");
+			content = intent.getExtras().getString("content");
 		}
 		
 		iv = new ImageView(this, Utils.getAttributeSet(this, ImageView.class.getSimpleName(), R.layout.show_bsimage));
-		iv.setImageResource(resId);
+		try {
+			iv.setImageDrawable(Drawable.createFromStream(this.getAssets().open(content), content));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		iv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onImageClick(v);
+			}
+			
+		});		
+		
 		iv.setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
@@ -55,9 +73,9 @@ public class BSImageShowActivity extends Activity {
 
 		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) iv.getLayoutParams();
 		if (params == null) {
-			params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,	LayoutParams.WRAP_CONTENT);
+			params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,	LayoutParams.MATCH_PARENT);
 		}
-		params.setMargins(100, 100, 0, 0);
+		params.setMargins(0, 0, 0, 0);
 		
 //		params.x = 100;
 //		params.y = 100;
@@ -82,6 +100,9 @@ public class BSImageShowActivity extends Activity {
 	    enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
 	    normalShape = getResources().getDrawable(R.drawable.shape);
 		
+	}
+	protected void onImageClick(View v) {
+		this.finish();
 	}
 	protected boolean onImageDrag(View view, DragEvent event) {
 		
