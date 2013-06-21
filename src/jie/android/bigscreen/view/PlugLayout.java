@@ -11,6 +11,7 @@ public class PlugLayout extends LinearLayout {
 
 	private int viewCount = 0;
 	private OnClickListener onClickListener = null;
+	private OnLongClickListener onLongClickListener = null;
 	
 	public PlugLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -20,6 +21,7 @@ public class PlugLayout extends LinearLayout {
 	public boolean addChildView(View view, LinearLayout.LayoutParams params) {
 	
 		view.setOnClickListener(onClickListener);
+		view.setOnLongClickListener(onLongClickListener);
 		if (params != null) {
 			this.addView(view, viewCount, params);
 		} else {
@@ -31,6 +33,16 @@ public class PlugLayout extends LinearLayout {
 	
 	public void setOnClickListener(OnClickListener listener) {
 		onClickListener = listener;
+		for (int i = 0; i < this.getChildCount(); ++ i) {
+			this.getChildAt(i).setOnClickListener(listener);
+		}
+	}
+	
+	public void setOnLongClickListener(OnLongClickListener listener) {
+		onLongClickListener = listener;
+		for (int i = 0; i < this.getChildCount(); ++ i) {
+			this.getChildAt(i).setOnLongClickListener(listener);
+		}		
 	}
 
 }

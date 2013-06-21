@@ -36,10 +36,14 @@ public class ImageShowHelper {
 	
 	public void setOnClickListener(OnClickListener listener) {
 		onClickListener = listener;
+		
+		slot.setPlugLayoutOnClickListener(onClickListener);		
 	}
 	
 	public void setOnLongClickListener(OnLongClickListener listener) {
 		onLongClickListener = listener;
+		
+		slot.setPlugLayoutOnLongClickListener(onLongClickListener);
 	}
 	
 	public PlugLayout addPlugLayout(int width) {

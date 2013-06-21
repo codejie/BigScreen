@@ -4,6 +4,10 @@ import jie.android.bigscreen.R;
 import jie.android.bigscreen.utils.Utils;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -39,10 +43,24 @@ public class SlotScrollView extends HorizontalScrollView {
 	public void clearAllLayouts() {
 		layout.removeAllViews();
 	}
-	
-	public void refresh() {
-		this.removeAllViews();
-		initLayout();
-//		layout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+	public void setPlugLayoutOnClickListener(OnClickListener listener) {
+		for (int i = 0; i < layout.getChildCount(); ++ i) {
+			View v = layout.getChildAt(i);
+			if (v instanceof PlugLayout) {
+				((PlugLayout)v).setOnClickListener(listener);
+			}
+		}
 	}
+	
+	public void setPlugLayoutOnLongClickListener(OnLongClickListener listener) {
+		for (int i = 0; i < layout.getChildCount(); ++ i) {
+			View v = layout.getChildAt(i);
+			if (v instanceof PlugLayout) {
+				((PlugLayout)v).setOnLongClickListener(listener);
+			}
+		}
+	}
+
+	
 }
